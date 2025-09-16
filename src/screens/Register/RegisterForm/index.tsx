@@ -57,6 +57,7 @@ export const RegisterForm = () => {
                 leftIconName="lock-outline"
                 label="SENHA"
                 placeholder="Digite uma senha"
+                secureTextEntry
             />
             <AppInput
                 control={control}
@@ -64,6 +65,7 @@ export const RegisterForm = () => {
                 leftIconName="lock-outline"
                 label="SENHA"
                 placeholder="Digite novamente a senha"
+                secureTextEntry
             />
 
             <View

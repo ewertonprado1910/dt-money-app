@@ -7,6 +7,7 @@ import { clsx } from "clsx"
 
 import { colors } from "@/shared/colors"
 import { useRef, useState } from "react"
+import { ErrorMessage } from "../ErrorMessage"
 
 interface AppInputParams<T extends FieldValues> extends TextInputProps {
     control: Control<T>,
@@ -40,7 +41,7 @@ export const AppInput = <T extends FieldValues>({
             control={control}
             name={name}
             render={({ field: { onChange, value }, fieldState: { error } }) => {
-                console.log(error)
+
                 return (
                     <View className="w-full mt-10">
                         {label && (
@@ -89,6 +90,9 @@ export const AppInput = <T extends FieldValues>({
 
                             }
                         </TouchableOpacity>
+                        {error && (
+                            <ErrorMessage>{error.message}</ErrorMessage>
+                        )}
                     </View>
                 )
             }}
