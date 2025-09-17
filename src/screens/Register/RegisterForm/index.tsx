@@ -10,7 +10,7 @@ import { AppInput } from "@/components/AppInput"
 import { PublicStackParamsList } from "@/routes/PublicRoutes"
 import { schema } from "./schema"
 
-interface FormRegisterParams {
+export interface FormRegisterParams {
     email: string
     name: string
     password: string
