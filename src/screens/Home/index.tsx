@@ -1,14 +1,15 @@
+import { SafeAreaView } from "react-native-safe-area-context"
+
 import { useAuthContext } from "@/context/auth.context"
-import { Button, Text, TouchableOpacity, View } from "react-native"
+
+import { AppHeader } from "@/components/AppHeader"
 
 
 export const Home = () => {
     const { handleLogout } = useAuthContext()
     return (
-        <View>
-            <Text>Ola, Home</Text>
-            <Button title="Sair" onPress={handleLogout}>
-            </Button>
-        </View>
+        <SafeAreaView className="flex-1 bg-background-primary">
+            <AppHeader/>
+        </SafeAreaView>
     )
 }
