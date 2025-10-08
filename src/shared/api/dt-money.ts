@@ -2,7 +2,7 @@ import axios from "axios"
 import { AppError } from "../helpers/AppError"
 
 export const dtMoneyApi = axios.create({
-    baseURL: "http://192.168.1.35:3001"
+    baseURL: "http://192.168.1.43:3001"
 })
 
 dtMoneyApi.interceptors.response.use(
