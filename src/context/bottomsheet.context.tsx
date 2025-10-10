@@ -35,7 +35,6 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
     setContent(newContent)
     setIsOpen(true)
 
-    // Animação de subir
     Animated.timing(translateY, {
       toValue: 0,
       duration: 250,
@@ -54,7 +53,6 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
     })
   }, [screenHeight])
 
-  // PanResponder para arrastar para baixo
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -88,7 +86,6 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
           <View className="flex-1 bg-black/70 justify-end" />
         </TouchableWithoutFeedback>
 
-        {/* BottomSheet */}
         <Animated.View
           {...panResponder.panHandlers}
           style={{

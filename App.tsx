@@ -6,6 +6,7 @@ import NavigationRoutes from "@/routes"
 import { SnackbarContextProvider } from "@/context/snackbar.context"
 import { SnackBar } from "@/components/SnackBar"
 import { BottomSheetProvider } from "@/context/bottomsheet.context"
+import { TransactionContextProvider } from "@/context/transaction.context"
 
 
 export default function App() {
@@ -13,10 +14,12 @@ export default function App() {
     <GestureHandlerRootView className="flex-1">
       <SnackbarContextProvider>
         <AuthContextProvider>
-          <BottomSheetProvider>
-            <NavigationRoutes />
-            <SnackBar />
-          </BottomSheetProvider>
+          <TransactionContextProvider>
+            <BottomSheetProvider>
+              <NavigationRoutes />
+              <SnackBar />
+            </BottomSheetProvider>
+          </TransactionContextProvider>
         </AuthContextProvider>
       </SnackbarContextProvider>
     </GestureHandlerRootView>
