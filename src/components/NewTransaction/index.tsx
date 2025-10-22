@@ -8,7 +8,7 @@ import { useBottomSheetContext } from "@/context/bottomsheet.context"
 import { TransactionTypeSelector } from "../SelectType"
 
 import { colors } from "@/shared/colors"
-
+import { SelectCategoryModal } from "../SelectCategoryModal"
 
 
 export const NewTransaction = () => {
@@ -61,6 +61,8 @@ export const NewTransaction = () => {
                     onChangeValue={(value) => setTransactionData("value", value ?? 0)}
                     className="text-white text-lg h-[50px] bg-background-primary my-2 rounded-[6]"
                 />
+                <SelectCategoryModal/>
+                
                 <TransactionTypeSelector
                     typeId={transaction.typeId}
                     setTransactionType={(typeId) => setTransactionData("typeId", typeId)}
