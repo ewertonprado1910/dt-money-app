@@ -1,5 +1,5 @@
 import { Transaction } from "../transaction"
-import { TotalTransactions } from "./total-transactions"
+import { TotalTransactions } from "../total-transactions"
 
 export interface GetTransactionParams {
     page: number,
@@ -10,9 +10,7 @@ export interface GetTransactionParams {
     categoryId?: number,
     searchText?: string
 }
-
 export interface GetTransactionResponse {
-
     data: Transaction[]
     totalRows: number,
     totalPages: number,

@@ -21,7 +21,7 @@ export const createTransaction = async (
 
 export const getTransaction = async (params: GetTransactionParams):
     Promise<GetTransactionResponse> => {
-    const { data } = await dtMoneyApi.get<GetTransactionResponse>("transaction", {
+    const { data } = await dtMoneyApi.get<GetTransactionResponse>("/transaction", {
         params,
         paramsSerializer: (p) => qs.stringify(p, { arrayFormat: "repeat" })
     })
