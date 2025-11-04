@@ -24,6 +24,11 @@ export const getTransaction = async (params: GetTransactionParams):
     const { data } = await dtMoneyApi.get<GetTransactionResponse>("/transaction", {
         params,
         paramsSerializer: (p) => qs.stringify(p, { arrayFormat: "repeat" })
+
     })
     return data
+}
+
+export const deleteTransaction = async (id: number) => {
+    await dtMoneyApi.delete(`/transaction/${id}`)
 }

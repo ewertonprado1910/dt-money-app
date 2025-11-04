@@ -66,10 +66,10 @@ export const NewTransaction = () => {
     }
 
     return (
-        <View className="px-5 py-3">
+        <View className="  px-5 py-3" >
             <TouchableOpacity
                 onPress={closeBottomSheet}
-                className="w-full flex-row  items-center justify-between">
+                className="w-full flex-row items-center justify-between">
                 <Text className="text-white text-xl font-bold">
                     Nova transação
                 </Text>

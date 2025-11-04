@@ -18,7 +18,7 @@ import {
 import { colors } from "@/shared/colors"
 
 interface BottomSheetContextType {
-  openBottomSheet: (content: React.ReactNode) => void
+  openBottomSheet: (content: React.ReactNode, snapIndex?: number) => void
   closeBottomSheet: () => void
 }
 
@@ -31,16 +31,22 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
   const screenHeight = Dimensions.get("window").height
   const translateY = useRef(new Animated.Value(screenHeight)).current
 
-  const openBottomSheet = useCallback((newContent: React.ReactNode) => {
-    setContent(newContent)
-    setIsOpen(true)
+  // snapPoints: índices 0 = 70%, 1 = 90%
+  const snapPoints = [screenHeight * 0.7, screenHeight * 0.9]
 
-    Animated.timing(translateY, {
-      toValue: 0,
-      duration: 250,
-      useNativeDriver: true,
-    }).start()
-  }, [])
+  const openBottomSheet = useCallback(
+    (newContent: React.ReactNode, snapIndex: number = 0) => {
+      setContent(newContent)
+      setIsOpen(true)
+
+      Animated.timing(translateY, {
+        toValue: screenHeight - snapPoints[snapIndex],
+        duration: 250,
+        useNativeDriver: true,
+      }).start()
+    },
+    [screenHeight, snapPoints]
+  )
 
   const closeBottomSheet = useCallback(() => {
     Animated.timing(translateY, {
@@ -60,7 +66,9 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
         Math.abs(gestureState.dy) > 5,
       onPanResponderMove: (_, gestureState) => {
         if (gestureState.dy > 0) {
-          translateY.setValue(gestureState.dy)
+          translateY.setValue(
+            screenHeight - snapPoints[0] + gestureState.dy
+          )
         }
       },
       onPanResponderRelease: (_, gestureState) => {
@@ -68,7 +76,7 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
           closeBottomSheet()
         } else {
           Animated.spring(translateY, {
-            toValue: 0,
+            toValue: screenHeight - snapPoints[0],
             useNativeDriver: true,
           }).start()
         }
@@ -81,7 +89,6 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
       {children}
 
       <Modal visible={isOpen} transparent animationType="none">
-
         <TouchableWithoutFeedback onPress={closeBottomSheet}>
           <View className="flex-1 bg-black/70 justify-end" />
         </TouchableWithoutFeedback>
@@ -90,7 +97,6 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
           {...panResponder.panHandlers}
           style={{
             position: "absolute",
-            bottom: 0,
             left: 0,
             right: 0,
             transform: [{ translateY }],
@@ -120,7 +126,5 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
   )
 }
 
-export const useBottomSheetContext = () => {
-  return useContext(BottomSheetContext)
-}
+export const useBottomSheetContext = () => useContext(BottomSheetContext)
 

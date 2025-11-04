@@ -28,8 +28,10 @@ export const TransactionCard: FC<Props> = ({ amount, type }) => {
 
     return (
         <View
-            className={`bg-${cardData.bgColor} 
-        min-w-[200] rounded-[6] px-8 py-6 justify-between mr-6`}>
+            className={
+                `bg-${cardData.bgColor} 
+                 min-w-[200] rounded-[6] px-8 py-6 justify-between mr-6`
+            }>
             <View className="flex-row justify-between items-center mg-1">
                 <Text className={`text-base ${cardData.color}`}>
                     {cardData.label}

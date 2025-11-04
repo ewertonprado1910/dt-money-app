@@ -6,10 +6,11 @@ import { useAuthContext } from "@/context/auth.context"
 import { useTransactionContext } from "@/context/transaction.context"
 import { useErrorHandler } from "@/shared/hooks/useErrorHandler"
 import { ListHeader } from "./ListHeader"
+import { TransactionCard } from "./TransactionCard"
 
 export const Home = () => {
     const { handleLogout } = useAuthContext()
-    const { fetchCategories, fetchTransactions } = useTransactionContext()
+    const { fetchCategories, fetchTransactions, transactions } = useTransactionContext()
     const { handlerError } = useErrorHandler()
 
     const handleFetchCategories = async () => {
@@ -24,7 +25,7 @@ export const Home = () => {
     useEffect(() => {
         (async () => {
             await Promise.all
-                ([handleFetchCategories(), fetchCategories()])
+                ([handleFetchCategories(), fetchTransactions()])
         })()
     }, [])
 
@@ -33,9 +34,9 @@ export const Home = () => {
             <FlatList
                 className="bg-background-secondary"
                 ListHeaderComponent={ListHeader}
-                //  ListFooterComponent={ }
-                data={[]}
-                renderItem={() => <></>}
+                data={transactions}
+                keyExtractor={({ id }) => `transaction-${id}`}
+                renderItem={({ item }) => <TransactionCard transaction={item}/>}
             />
         </SafeAreaView>
     )
