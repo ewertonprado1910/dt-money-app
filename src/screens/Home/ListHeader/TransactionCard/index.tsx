@@ -8,6 +8,8 @@ import { TransactionTypes } from "@/shared/enums/transaction-types"
 import { useTransactionContext } from "@/context/transaction.context"
 import { ICONS } from "./strategies/icon-strategy"
 import { CARD_DATA } from "./strategies/card-date-strategy"
+import { moneyMapper } from "@/shared/utils/money-mapper"
+import clsx from "clsx"
 
 export type TransactionCardType = TransactionTypes | "total"
 
@@ -28,11 +30,12 @@ export const TransactionCard: FC<Props> = ({ amount, type }) => {
 
     return (
         <View
-            className={
+            className={clsx(
                 `bg-${cardData.bgColor} 
-                 min-w-[200] rounded-[6] px-8 py-6 justify-between mr-6`
-            }>
-            <View className="flex-row justify-between items-center mg-1">
+                 min-w-[280] rounded-[6] px-8 py-6 justify-between mr-6`,
+                 type === "total" && "mr-12"
+            )}>
+            <View className="flex-row justify-between items-center ">
                 <Text className={`text-base ${cardData.color}`}>
                     {cardData.label}
                 </Text>
@@ -43,7 +46,7 @@ export const TransactionCard: FC<Props> = ({ amount, type }) => {
             </View>
             <View>
                 <Text className="text-2xl text-gray-400 font-bold">
-                    R$ {amount.toFixed(2).replace(".", ",")}
+                    R$ {moneyMapper(amount)}
                 </Text>
                 {
                     type !== "total" && (

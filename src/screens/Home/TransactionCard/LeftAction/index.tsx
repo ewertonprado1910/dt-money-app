@@ -6,6 +6,7 @@ import { MaterialIcons } from "@expo/vector-icons"
 import { Transaction } from "@/shared/interfaces/transaction"
 import { colors } from "@/shared/colors"
 import { useBottomSheetContext } from "@/context/bottomsheet.context"
+import { EditTransactionForm } from "./EditTransaction"
 
 
 interface Params {
@@ -20,7 +21,7 @@ export const LeftAction: FC<Params> = ({
     return (
         <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() => openBottomSheet(<></>, 1)}
+            onPress={() => openBottomSheet(<EditTransactionForm transaction={transaction}/>, 1)}
         >
             <View className="h-[140] bg-accent-blue-dark w-[80] rounded-l-[6] items-center justify-center">
                 <MaterialIcons name="edit" size={30} color={colors.white} />

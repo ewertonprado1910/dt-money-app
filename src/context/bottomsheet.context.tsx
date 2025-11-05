@@ -31,8 +31,7 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
   const screenHeight = Dimensions.get("window").height
   const translateY = useRef(new Animated.Value(screenHeight)).current
 
-  // snapPoints: índices 0 = 70%, 1 = 90%
-  const snapPoints = [screenHeight * 0.7, screenHeight * 0.9]
+  const snapPoints = [screenHeight * 0.9, screenHeight * 0.9]
 
   const openBottomSheet = useCallback(
     (newContent: React.ReactNode, snapIndex: number = 0) => {
@@ -109,12 +108,13 @@ export const BottomSheetProvider: FC<PropsWithChildren> = ({ children }) => {
                 borderTopLeftRadius: 32,
                 borderTopRightRadius: 32,
                 elevation: 9,
-                shadowColor: "#000",
+                shadowColor: colors["accent-brand"],
                 shadowOpacity: 0.25,
                 shadowOffset: { width: 0, height: 2 },
-                shadowRadius: 4,
+                shadowRadius: 5,
                 padding: 20,
                 maxHeight: "90%",
+            
               }}
             >
               {content}
