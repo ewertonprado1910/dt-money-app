@@ -59,11 +59,15 @@ export const TransactionCard: FC<Params> = ({
                             size={25}
                         />
                         <Text className="text-gray-700 text-base ml-2">
-                            {format(transaction.deletedAt, "dd/MM/YYY")}
+                            {transaction.deletedAt
+                                ? format(new Date(transaction.deletedAt), "dd/MM/yyyy")
+                                : format(new Date(transaction.createdAt), "dd/MM/yyyy")
+                            }
+
                         </Text>
                     </View>
                 </View>
             </View>
         </Swipeable>
     )
-}
+} 

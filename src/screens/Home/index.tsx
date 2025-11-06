@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useEffect } from "react"
-import { FlatList, Text, TouchableOpacity } from "react-native"
+import { FlatList, RefreshControl, Text, TouchableOpacity } from "react-native"
 
 import { useAuthContext } from "@/context/auth.context"
 import { useTransactionContext } from "@/context/transaction.context"
@@ -10,7 +10,13 @@ import { TransactionCard } from "./TransactionCard"
 
 export const Home = () => {
     const { handleLogout } = useAuthContext()
-    const { fetchCategories, fetchTransactions, transactions } = useTransactionContext()
+    const { fetchCategories,
+        fetchTransactions,
+        transactions,
+        refreshTransaction,
+        loading,
+        loadMoreTransactions
+    } = useTransactionContext()
     const { handlerError } = useErrorHandler()
 
     const handleFetchCategories = async () => {
@@ -25,7 +31,7 @@ export const Home = () => {
     useEffect(() => {
         (async () => {
             await Promise.all
-                ([handleFetchCategories(), fetchTransactions()])
+                ([handleFetchCategories(), fetchTransactions({ page: 1 })])
         })()
     }, [])
 
@@ -36,7 +42,15 @@ export const Home = () => {
                 ListHeaderComponent={ListHeader}
                 data={transactions}
                 keyExtractor={({ id }) => `transaction-${id}`}
-                renderItem={({ item }) => <TransactionCard transaction={item}/>}
+                renderItem={({ item }) => <TransactionCard transaction={item} />}
+                onEndReached={loadMoreTransactions}
+                onEndReachedThreshold={0.5}
+                refreshControl={
+                    <RefreshControl
+                        onRefresh={refreshTransaction}
+                        refreshing={loading}
+                    />
+                }
             />
         </SafeAreaView>
     )
