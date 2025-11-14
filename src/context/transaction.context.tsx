@@ -33,6 +33,9 @@ export type TransactionContextTypes = {
     loadMoreTransactions: () => Promise<void>
     loadings: Loadings
     handleLoadings: (params: HandleLoadingParams) => void
+    pagination: Pagination
+    setSearchText: (text: string) => void
+    searchText: string
 }
 
 export const TransactionContext = createContext({} as TransactionContextTypes)
@@ -43,6 +46,9 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
 
     const [categories, setCategories] = useState<TransactionCategory[]>([])
     const [transactions, setTransactions] = useState<Transaction[]>([])
+    const [searchText, setSearchText] = useState("")
+
+
     const [loadings, setLoadings] = useState<Loadings>({
         initial: false,
         refresh: false,
@@ -56,7 +62,7 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
 
     const [pagination, setPagination] = useState<Pagination>({
         page: 1,
-        perPage: 4,
+        perPage: 15,
         totalRows: 0,
         totalPages: 0
     })
@@ -79,7 +85,7 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
             totalPages: transactionResponse.totalPages,
             totalRows: transactionResponse.totalRows
         })
-        
+
     }, [pagination])
 
     const fetchCategories = async () => {
@@ -103,11 +109,12 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
 
     const fetchTransactions = useCallback
         (async ({ page = 1 }: FetchTransactionsParams) => {
-            
+
 
             const transactionResponse = await transactionService.getTransaction({
                 page,
-                perPage: pagination.perPage
+                perPage: pagination.perPage,
+                searchText,
             })
 
             if (page === 1) {
@@ -122,8 +129,8 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
                 totalRows: transactionResponse.totalRows,
                 totalPages: transactionResponse.totalPages
             })
-           
-        }, [pagination])
+
+        }, [pagination, searchText])
 
     const loadMoreTransactions = useCallback(async () => {
         if (loadings || pagination.page >= pagination.totalPages) return
@@ -144,7 +151,10 @@ export const TransactionContextProvider: FC<PropsWithChildren> = ({
                 refreshTransaction,
                 loadMoreTransactions,
                 handleLoadings,
-                loadings,   
+                loadings,
+                pagination,
+                setSearchText,
+                searchText
             }}
         >
             {children}

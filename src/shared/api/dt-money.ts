@@ -3,7 +3,7 @@ import { AppError } from "../helpers/AppError"
 import { addTokenToRequest } from "../helpers/axios.helper"
 
 export const dtMoneyApi = axios.create({
-    baseURL: "http://192.168.1.39:3001"
+    baseURL: "http://192.168.1.35:3001"
 })
 
 addTokenToRequest(dtMoneyApi)
