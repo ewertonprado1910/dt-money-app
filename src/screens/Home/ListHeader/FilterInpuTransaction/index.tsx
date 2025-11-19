@@ -4,6 +4,8 @@ import { MaterialIcons } from "@expo/vector-icons"
 
 import { useTransactionContext } from "@/context/transaction.context"
 import { colors } from "@/shared/colors"
+import { useBottomSheetContext } from "@/context/bottomsheet.context"
+import { TransactionsFilters } from "./TransactionsFilters"
 
 
 export const FilterInputTransaction = () => {
@@ -13,6 +15,8 @@ export const FilterInputTransaction = () => {
         fetchTransactions
     } = useTransactionContext()
     const [text, setText] = useState("")
+
+    const { openBottomSheet } = useBottomSheetContext()
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -25,8 +29,8 @@ export const FilterInputTransaction = () => {
     useEffect(() => {
         (async () => {
             try {
-               fetchTransactions({ page: 1 })
-              
+                fetchTransactions({ page: 1 })
+
             } catch (error) {
 
             }
@@ -54,7 +58,9 @@ export const FilterInputTransaction = () => {
                     placeholderTextColor={colors.gray[700]}
 
                 />
-                <TouchableOpacity className="absolute right-0">
+                <TouchableOpacity
+                    onPress={() => openBottomSheet(<TransactionsFilters />, 0)}
+                    className="absolute right-0">
                     <MaterialIcons
                         name="filter-list"
                         size={25}
